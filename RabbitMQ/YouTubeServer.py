@@ -7,6 +7,7 @@ channel = connection.channel()
 channel.queue_declare(queue='user_requests')
 channel.queue_declare(queue='youtuber_uploads')
 
+channels=[]
 subscriptions = {}  #dictionary of list of subscritpions with user as the key
 notification_queues = {}  
 
@@ -14,14 +15,27 @@ def update_subscription(user, youtuber, subscribe=True):
     if user not in subscriptions:
         subscriptions[user] = []
     if subscribe:
-        if youtuber not in subscriptions[user]:
+        if youtuber not in channels:
+            message=f"Failure: {youtuber} not found"
+        elif youtuber not in subscriptions[user]:
+            message=f"Succesfully subscribed to {youtuber}"
             subscriptions[user].append(youtuber)
+        else:
+            message=f"Failure: {youtuber} is already in your subscription list"
     else:
-        if youtuber in subscriptions[user]:
+        if youtuber not in channels:
+            message=f"Failure: {youtuber} not found"
+        elif youtuber in subscriptions[user]:
             subscriptions[user].remove(youtuber)
-
+            message=f"Succesfully unsubscribed to {youtuber}"
+        else:
+            message=f"Failure: {youtuber} is not in your subscription list"
+    user_queue = notification_queues.get(user, f"{user}_notifications")
+    channel.queue_declare(queue=user_queue)
+    channel.basic_publish(exchange='', routing_key=user_queue, body=message)
 def notify_users(youtuber, video_name):
-    message = f"{youtuber} uploaded {video_name}"
+    message = f"New Notification: {youtuber} uploaded {video_name}"
+    channels.append(youtuber)
     for user, subs in subscriptions.items():
         if youtuber in subs:
             user_queue = notification_queues.get(user, f"{user}_notifications")

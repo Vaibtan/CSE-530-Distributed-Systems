@@ -26,7 +26,7 @@ def listen_for_notifications(username):
     channel.queue_declare(queue=notification_queue)
 
     def callback(ch, method, properties, body):
-        print(f"New Notification: {body.decode()}")
+        print(f"{body.decode()}")
 
     channel.basic_consume(queue=notification_queue, on_message_callback=callback, auto_ack=True)
     print(f"Listening for notifications for {username}...")
@@ -41,11 +41,11 @@ def listen_for_notifications(username):
 
 if __name__ == "__main__":
     username = sys.argv[1]
-    if len(sys.argv > 3):
+    if len(sys.argv)>3:
         action= sys.argv[2]
         youtuber=sys.argv[3]
     else:
-        None
+        action=youtuber=None
     if action and youtuber:
         update_subscription(username, action, youtuber)
 
