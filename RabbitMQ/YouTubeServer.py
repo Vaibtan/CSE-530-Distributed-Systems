@@ -1,4 +1,4 @@
-import pika
+import pika,sys, os
 import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -61,8 +61,17 @@ def consume_youtuber_requests(ch, method, properties, body):
     print(f"{youtuber} uploaded {video_name}")
     notify_users(youtuber, video_name)
 
-channel.basic_consume(queue='user_requests', on_message_callback=consume_user_requests, auto_ack=True)
-channel.basic_consume(queue='youtuber_uploads', on_message_callback=consume_youtuber_requests, auto_ack=True)
 
-print('YoutubeServer is running. Waiting for messages...')
-channel.start_consuming()
+if __name__ == '__main__':
+    try:
+        channel.basic_consume(queue='user_requests', on_message_callback=consume_user_requests, auto_ack=True)
+        channel.basic_consume(queue='youtuber_uploads', on_message_callback=consume_youtuber_requests, auto_ack=True)
+
+        print('YoutubeServer is running. Waiting for messages...')
+        channel.start_consuming()
+    except KeyboardInterrupt:
+        print('Closing the server')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)

@@ -16,7 +16,7 @@ def update_subscription(username, action, youtuber):
     }
     channel.queue_declare(queue='user_requests')
     channel.basic_publish(exchange='', routing_key='user_requests', body=json.dumps(message))
-    print("Subscription update SUCCESS")
+    print("Subscription request sent: SUCCESS")
     channel.close()
     connection.close()
 
