@@ -8,7 +8,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 context = zmq.Context()
 socket_request = context.socket(zmq.REQ)
-socket_request.connect("tcp://localhost:5555")
+socket_request.connect("tcp://localhost:5555")  #replace localhost with external IP of VM Instance on which message_server is running
 
 group_members = [] #stores uuid of the group members
 messages = {} #{timestamp: (uuid, message)}
