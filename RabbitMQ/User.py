@@ -3,7 +3,13 @@ import sys
 import json
 
 def create_channel():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host='34.131.86.186',  # Replace 'vm_external_ip' with your VM's external IP address
+            credentials=pika.PlainCredentials('ElderDragon', 'chirag')  # Replace with your RabbitMQ credentials
+        )
+    )
+    # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     return connection, connection.channel()
 
 def update_subscription(username, action, youtuber):
