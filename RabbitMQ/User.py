@@ -5,8 +5,8 @@ import json
 def create_channel():
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(
-            host='34.131.86.186',  # Replace 'vm_external_ip' with your VM's external IP address
-            credentials=pika.PlainCredentials('ElderDragon', 'chirag')  # Replace with your RabbitMQ credentials
+            host='34.131.86.186',  # changes everytime so replace it with external ip after starting vm
+            credentials=pika.PlainCredentials('ElderDragon', 'chirag') 
         )
     )
     # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
