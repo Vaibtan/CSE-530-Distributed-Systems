@@ -9,7 +9,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 context = zmq.Context()
 socket1 = context.socket(zmq.REQ)
-socket1.connect("tcp://localhost:5555")
+socket1.connect("tcp://localhost:5555") #replace localhost with external IP of VM Instance on which message_server is running
 
 groups = {} # {group_name: [(ip_address, socket_number)]}
 sockets = []
