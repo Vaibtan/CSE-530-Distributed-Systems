@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+import "market.proto";
+
+
+message SellItemRequest {
+    string uuid = 1;
+    string name = 2;
+    string category = 3;
+//    enum Category {
+//        ELECTRONICS = 0;
+//        FASHION = 1;
+//        OTHERS = 2;
+//    }
+    int32 quantity = 4;
+    string description = 5;
+    string seller_address = 6;
+    float price = 7;
+}
+
+message SellItemResponse {
+//    enum Status {
+//        SUCCESS = 0;
+//        FAILED = 1;
+//    }
+    string status = 1;
+    int32 item_id = 2;
+
+}
+
+
+message UpdateItemRequest {
+    string uuid = 1;
+    int32 item_id = 2;
+    float price = 3;
+    int32 quantity = 4;
+}
+
+message UpdateItemResponse {
+//    enum Status {
+//    SUCCESS = 0;
+//    FAILED = 1;
+//}
+    string status = 1;
+}
+
+message DeleteItemRequest {
+    string seller_uuid = 1;
+    int32 item_id = 2;
+}
+
+message DeleteItemResponse {
+    string status = 1;
+}
+
+message DisplaySellerItemsRequest {
+    string address = 1;
+    string uuid = 2;
+}
+
+message DisplaySellerItemsResponse {
+    repeated ItemInfo items = 1;
+}
+
+message ItemInfo {
+    int32 id = 1;
+    string name = 2;
+    string category = 3;
+    int32 quantity = 4;
+    string description = 5;
+    string seller_address = 6;
+    float price = 7;
+    float rating = 8;
+}
+
+
+service SellerService {
+    rpc RegisterSeller(RegisterSellerRequest) returns (RegisterSellerResponse) {}
+
+    rpc SellItem(SellItemRequest) returns (SellItemResponse) {}
+
+    rpc UpdateItem(UpdateItemRequest) returns (UpdateItemResponse) {}
+
+    rpc DeleteItem(DeleteItemRequest) returns (DeleteItemResponse) {}
+
+    rpc DisplaySellerItems(DisplaySellerItemsRequest) returns (DisplaySellerItemsResponse) {}
+}

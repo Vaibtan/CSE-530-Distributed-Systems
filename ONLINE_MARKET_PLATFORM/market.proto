@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+message RegisterSellerRequest {
+    string address = 1;
+    string uuid = 2;
+}
+
+message RegisterSellerResponse {
+    string status = 1;
+}
+
+message NotifyClientRequest {
+    string notification_message = 1;
+}
+
+message NotifyClientResponse {
+    string status = 1;
+}
+
+service MarketService {
+    rpc RegisterSeller(RegisterSellerRequest) returns (RegisterSellerResponse) {}
+    rpc NotifyClient(NotifyClientRequest) returns (NotifyClientResponse) {}
+}
