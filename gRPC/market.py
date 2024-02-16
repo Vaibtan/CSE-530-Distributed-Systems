@@ -47,8 +47,11 @@ class market(market_pb2_grpc.market):
         if request.seller_uuid not in self.sellers:
             return market_pb2.SellItemResponse(message="FAIL, Seller not registered")
         else:
-            if request.product_name in self.items:
+            if request.product_name in self.items and request.seller_uuid in self.items[request.product_name]:
                 return market_pb2.SellItemResponse(message="FAIL, Item already exists")
+            elif request.product_name in self.items and request.seller_uuid not in self.items[request.product_name]:
+                prod = self.items[request.product_name]+"_"+request.seller_uuid
+                self.items[prod] = [request.category, request.price, request.quantity, request.seller_uuid, self.sellers[request.seller_uuid], request.description, 0]
             else:
                 self.items[request.product_name] = [request.category, request.price, request.quantity, request.seller_uuid, self.sellers[request.seller_uuid], request.description, 0]
                 return market_pb2.SellItemResponse(message="SUCCESS, Item added")
