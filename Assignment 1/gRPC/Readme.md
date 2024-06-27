@@ -1,4 +1,4 @@
-# ONLINE COMMODITY TRADING PLATFORM USING gRPC
+# Cloud Native Online Commodity Trading Platform using gRPC
 
 ## Steps to run the application
 Commands to compile the proto files
