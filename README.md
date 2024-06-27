@@ -1,1 +1,1 @@
-# Distributed_Systems
+# CSE 530 Distributed Systems Assignments
