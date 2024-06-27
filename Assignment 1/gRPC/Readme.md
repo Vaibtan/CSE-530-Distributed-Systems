@@ -1,4 +1,4 @@
-# ONLINE SHOPPING PLATFORM USING gRPC
+# ONLINE COMMODITY TRADING PLATFORM USING gRPC
 
 ## Steps to run the application
 Commands to compile the proto files
